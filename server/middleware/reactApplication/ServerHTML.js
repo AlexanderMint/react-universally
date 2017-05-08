@@ -10,6 +10,8 @@ import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import serialize from 'serialize-javascript';
 
+import styleSheet from 'styled-components/lib/models/StyleSheet';
+
 import config from '../../../config';
 import ifElse from '../../../shared/utils/logic/ifElse';
 import removeNil from '../../../shared/utils/arrays/removeNil';
@@ -33,6 +35,10 @@ function stylesheetTag(stylesheetFilePath) {
   );
 }
 
+function stylesheetBlock(css) {
+  return <style type="text/css" dangerouslySetInnerHTML={{ __html: css }} />;
+}
+
 function scriptTag(jsFilePath) {
   return <script type="text/javascript" src={jsFilePath} />;
 }
@@ -47,11 +53,14 @@ function ServerHTML(props) {
     <script nonce={nonce} type="text/javascript" dangerouslySetInnerHTML={{ __html: body }} />
   );
 
+  const styledComponentCSS = styleSheet.getCSS();
+
   const headerElements = removeNil([
     ...ifElse(helmet)(() => helmet.title.toComponent(), []),
     ...ifElse(helmet)(() => helmet.base.toComponent(), []),
     ...ifElse(helmet)(() => helmet.meta.toComponent(), []),
     ...ifElse(helmet)(() => helmet.link.toComponent(), []),
+    ifElse(styledComponentCSS)(() => stylesheetBlock(styledComponentCSS)),
     ifElse(clientEntryAssets && clientEntryAssets.css)(() => stylesheetTag(clientEntryAssets.css)),
     ...ifElse(helmet)(() => helmet.style.toComponent(), []),
   ]);
