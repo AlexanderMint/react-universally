@@ -40,7 +40,7 @@ function scriptTag(jsFilePath) {
 // COMPONENT
 
 function ServerHTML(props) {
-  const { asyncComponentsState, helmet, nonce, reactAppString } = props;
+  const { asyncComponentsState, helmet, nonce, reactAppString, css } = props;
 
   // Creates an inline script definition that is protected by the nonce.
   const inlineScript = body => (
@@ -53,6 +53,7 @@ function ServerHTML(props) {
     ...ifElse(helmet)(() => helmet.meta.toComponent(), []),
     ...ifElse(helmet)(() => helmet.link.toComponent(), []),
     ifElse(clientEntryAssets && clientEntryAssets.css)(() => stylesheetTag(clientEntryAssets.css)),
+    ifElse(css)(() => css),
     ...ifElse(helmet)(() => helmet.style.toComponent(), []),
   ]);
 
@@ -109,6 +110,7 @@ ServerHTML.propTypes = {
   helmet: PropTypes.object,
   nonce: PropTypes.string,
   reactAppString: PropTypes.string,
+  css: PropTypes.arrayOf(PropTypes.element),
 };
 
 // EXPORT

@@ -4,6 +4,7 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { AsyncComponentProvider, createAsyncContext } from 'react-async-component';
 import asyncBootstrapper from 'react-async-bootstrapper';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 import config from '../../../config';
 
@@ -41,13 +42,16 @@ export default function reactApplicationMiddleware(request, response) {
   // Create a context for <StaticRouter>, which will allow us to
   // query for the results of the render.
   const reactRouterContext = {};
+  const sheet = new ServerStyleSheet();
 
   // Declare our React application.
   const app = (
     <AsyncComponentProvider asyncContext={asyncComponentsContext}>
-      <StaticRouter location={request.url} context={reactRouterContext}>
-        <DemoApp />
-      </StaticRouter>
+      <StyleSheetManager sheet={sheet.instance}>
+        <StaticRouter location={request.url} context={reactRouterContext}>
+          <DemoApp />
+        </StaticRouter>
+      </StyleSheetManager>
     </AsyncComponentProvider>
   );
 
@@ -62,6 +66,7 @@ export default function reactApplicationMiddleware(request, response) {
         reactAppString={appString}
         nonce={nonce}
         helmet={Helmet.rewind()}
+        css={sheet.getStyleElement()}
         asyncComponentsState={asyncComponentsContext.getState()}
       />,
     );

@@ -16,9 +16,16 @@ import AsyncHomeRoute from './AsyncHomeRoute';
 import AsyncCounterRoute from './AsyncCounterRoute';
 import AsyncAboutRoute from './AsyncAboutRoute';
 
+import styled from 'styled-components';
+
+const Box = styled.div`
+    padding: 2rem;
+    background-color: red;
+`;
+
 function DemoApp() {
   return (
-    <div style={{ padding: '2rem' }}>
+    <Box>
       <Helmet>
         <html lang="en" />
         <title>{config('htmlPage.defaultTitle')}</title>
@@ -31,13 +38,13 @@ function DemoApp() {
         <meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png" />
         <meta name="theme-color" content="#2b2b2b" />
         {/*
-          A great reference for favicons:
-          https://github.com/audreyr/favicon-cheat-sheet
-          It's a pain to manage/generate them. I run both these in order,
-          and combine their results:
-          http://realfavicongenerator.net/
-          http://www.favicomatic.com/
-        */}
+                A great reference for favicons:
+                https://github.com/audreyr/favicon-cheat-sheet
+                It's a pain to manage/generate them. I run both these in order,
+                and combine their results:
+                http://realfavicongenerator.net/
+                http://www.favicomatic.com/
+            */}
         <link
           rel="apple-touch-icon-precomposed"
           sizes="152x152"
@@ -98,10 +105,10 @@ function DemoApp() {
         <link rel="manifest" href="/manifest.json" />
 
         {/*
-          NOTE: This is simply for quick and easy styling on the demo. Remove
-          this and the related items from the Content Security Policy in the
-          global config if you have no intention of using milligram.
-        */}
+                NOTE: This is simply for quick and easy styling on the demo. Remove
+                this and the related items from the Content Security Policy in the
+                global config if you have no intention of using milligram.
+            */}
         <link
           rel="stylesheet"
           href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
@@ -120,7 +127,7 @@ function DemoApp() {
           <Route component={Error404} />
         </Switch>
       </div>
-    </div>
+    </Box>
   );
 }
 
