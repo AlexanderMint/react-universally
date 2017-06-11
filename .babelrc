@@ -6,6 +6,9 @@
 // It's nice not having to worry/think about what level of javascript syntax
 // is supported for each context.
 {
+  "plugins": [["styled-components", {
+      "ssr": true
+    }]],
   "presets": [
     ["env", { "targets": { "node": true } }],
     "stage-3",

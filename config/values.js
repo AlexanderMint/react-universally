@@ -278,6 +278,14 @@ const values = {
       // eslint-disable-next-line no-unused-vars
       const { target, mode } = buildOptions;
 
+      if (target === 'server') {
+        babelConfig.plugins.push([
+          'styled-components',
+          {
+            ssr: true,
+          },
+        ]);
+      }
       // Example
       /*
       if (target === 'server' && mode === 'development') {
